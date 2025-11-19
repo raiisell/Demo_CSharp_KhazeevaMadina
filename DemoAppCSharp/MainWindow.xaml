@@ -1,0 +1,19 @@
+﻿<Window x:Class="DemoAppCSharp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoAppCSharp"
+        mc:Ignorable="d"
+        FontFamily="Bahnschrift Light SemiCondensed"
+        Icon="/images/Новые технологии.ico"
+        Title="Заявки партнеров" Height="450" Width="800">
+    <Grid>
+        <ListView x:Name="LB_request" Margin="138,46,0,0" Background="#FFBBDCFA" FontFamily="Bahnschrift Light SemiCondensed" HorizontalAlignment="Left" Width="662" BorderBrush="{x:Null}" />
+        <Image HorizontalAlignment="Left" Height="100" Margin="22,10,0,0" VerticalAlignment="Top" Width="114" Source="/images/Новые технологии.png"/>
+        <Label Content="Заявки партнеров" HorizontalAlignment="Center" Margin="0,7,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Bahnschrift Light SemiCondensed" Background="#FFBBDCFA"/>
+        <Button x:Name="btn_addRequest" Content="Добавить заявку" HorizontalAlignment="Left" Margin="16,138,0,0" VerticalAlignment="Top" Background="#FF0C4882" Height="24" Width="112" FontSize="14" Click="btn_addRequest_Click"/>
+        <Button x:Name="btn_count" Content="Расчет" HorizontalAlignment="Left" Margin="16,167,0,0" VerticalAlignment="Top" Background="#FF0C4882" Height="24" Width="112" FontSize="14" Click="btn_count_Click" />
+
+    </Grid>
+</Window>
