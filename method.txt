@@ -1,0 +1,31 @@
+private int Method(int productTypeID, int materialTypeID, int quantityInWarehouse, int needQuantity, double param1, double param2)
+{
+    //нахожу необходимые в базе переменные
+    ProductType productType = db.ProductType.FirstOrDefault(x => x.ID == productTypeID);
+    MaterialType materialType = db.MaterialType.FirstOrDefault(x => x.ID == materialTypeID);
+
+    if (productType == null || materialType == null || quantityInWarehouse <= 0 || needQuantity <= 0 || param1 <= 0 || param2 <= 0)
+    {
+        return -1;
+    }
+
+    // Проверяем, что коэффициенты не равны null
+    if (productType.CoefficentOfLostness == null || materialType.CoefficentOfLost == null)
+    {
+        MessageBox.Show("Коэффициенты потерь не заданы для выбранного типа продукта или материала.", "Ошибка");
+        return -1; 
+    }
+
+    double? coeffOfLostness = productType.CoefficentOfLostness;
+    double? coeffOfLost = materialType.CoefficentOfLost;
+    double? quantityForOne = param2 * param1 * coeffOfLostness;
+    double? quantityOfLost = (quantityForOne * coeffOfLost) + quantityForOne;
+    double? productTorelease = needQuantity - quantityInWarehouse;
+
+    double? howMuchMaterial = quantityOfLost * productTorelease;
+
+    //округляю до бОльшего
+    int result = (int)Math.Round(Convert.ToDouble(howMuchMaterial));
+
+    return result;
+}
