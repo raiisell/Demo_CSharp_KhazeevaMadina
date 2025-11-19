@@ -1,0 +1,621 @@
+USE [master]
+GO
+/****** Object:  Database [dbForDemo0202]    Script Date: 19.11.2025 23:00:45 ******/
+CREATE DATABASE [dbForDemo0202]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'dbForDemo0202', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLWORK\MSSQL\DATA\dbForDemo0202.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'dbForDemo0202_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.SQLWORK\MSSQL\DATA\dbForDemo0202_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [dbForDemo0202] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [dbForDemo0202].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [dbForDemo0202] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [dbForDemo0202] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [dbForDemo0202] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [dbForDemo0202] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [dbForDemo0202] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [dbForDemo0202] SET  MULTI_USER 
+GO
+ALTER DATABASE [dbForDemo0202] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [dbForDemo0202] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [dbForDemo0202] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [dbForDemo0202] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [dbForDemo0202] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [dbForDemo0202] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [dbForDemo0202] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [dbForDemo0202] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [dbForDemo0202]
+GO
+/****** Object:  Table [dbo].[Material]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Material](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MaterialName] [nvarchar](20) NULL,
+	[MaterialType] [int] NULL,
+ CONSTRAINT [PK_Material] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MaterialType]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MaterialType](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[MaterialTypeName] [nvarchar](25) NULL,
+	[CoefficentOfLost] [float] NULL,
+ CONSTRAINT [PK_MaterialType] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Partner]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Partner](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[PartnerType] [int] NULL,
+	[PartnerName] [nvarchar](50) NULL,
+	[Director] [nvarchar](140) NULL,
+	[Email] [nvarchar](70) NULL,
+	[PhoneNumber] [nvarchar](20) NULL,
+	[Address] [nvarchar](255) NULL,
+	[INN] [nvarchar](12) NULL,
+	[Rating] [int] NULL,
+ CONSTRAINT [PK_Partner] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PartnerRequest]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PartnerRequest](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Partner] [int] NULL,
+ CONSTRAINT [PK_PartnerRequest] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PartnerRequestList]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PartnerRequestList](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[PartnerRequest] [int] NULL,
+	[Product] [int] NULL,
+	[Quantity] [int] NULL,
+ CONSTRAINT [PK_PartnerRequestList] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PartnerType]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PartnerType](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[PartnerTypeName] [nvarchar](3) NULL,
+ CONSTRAINT [PK_PartnerType] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [nvarchar](150) NULL,
+	[Article] [float] NULL,
+	[MinCostForPartner] [float] NULL,
+	[ProductType] [int] NULL,
+	[Material] [int] NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProductType]    Script Date: 19.11.2025 23:00:45 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProductType](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductTypeName] [nvarchar](255) NULL,
+	[CoefficentOfLostness] [float] NULL,
+ CONSTRAINT [PK_ProductType] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Material] ON 
+GO
+INSERT [dbo].[Material] ([ID], [MaterialName], [MaterialType]) VALUES (1, N'Бамбук', 1)
+GO
+INSERT [dbo].[Material] ([ID], [MaterialName], [MaterialType]) VALUES (2, N'Гибкий пластик', 2)
+GO
+INSERT [dbo].[Material] ([ID], [MaterialName], [MaterialType]) VALUES (3, N'Керамогранит', 3)
+GO
+INSERT [dbo].[Material] ([ID], [MaterialName], [MaterialType]) VALUES (4, N'Аллюминий', 4)
+GO
+INSERT [dbo].[Material] ([ID], [MaterialName], [MaterialType]) VALUES (5, N'Углепластик', 5)
+GO
+SET IDENTITY_INSERT [dbo].[Material] OFF
+GO
+SET IDENTITY_INSERT [dbo].[MaterialType] ON 
+GO
+INSERT [dbo].[MaterialType] ([ID], [MaterialTypeName], [CoefficentOfLost]) VALUES (1, N'Древесина', 0.2)
+GO
+INSERT [dbo].[MaterialType] ([ID], [MaterialTypeName], [CoefficentOfLost]) VALUES (2, N'Полимер', 0.5)
+GO
+INSERT [dbo].[MaterialType] ([ID], [MaterialTypeName], [CoefficentOfLost]) VALUES (3, N'Камень', 0.3)
+GO
+INSERT [dbo].[MaterialType] ([ID], [MaterialTypeName], [CoefficentOfLost]) VALUES (4, N'Металл', 0.15)
+GO
+INSERT [dbo].[MaterialType] ([ID], [MaterialTypeName], [CoefficentOfLost]) VALUES (5, N'Композит', 0.18)
+GO
+SET IDENTITY_INSERT [dbo].[MaterialType] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Partner] ON 
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (1, 1, N'Стройдвор', N'Андреева Ангелина Николаевна', N'angelina77@kart.ru', N'492 452 22 82', N'143001, Московская область, город Одинцово, уд. Ленина, 21', N'9.43246e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (2, 1, N'Самоделка', N'Мельников Максим Петрович', N'melnikov.maksim88@hm.ru', N'812 267 19 59', N'306230, Курская область, город Обоянь, ул. 1 Мая, 89', N'7.80389e+009', 3)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (3, 2, N'Деревянные изделия', N'Лазарев Алексей Сергеевич', N'aleksejlazarev@al.ru', N'922 467 93 83', N'238340, Калининградская область, город Светлый, ул. Морская, 12', N'8.43039e+009', 4)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (4, 2, N'Декор и отделка', N'Саншокова Мадина Муратовна', N'mmsanshokova@lss.ru', N'413 230 30 79', N'685000, Магаданская область, город Магадан, ул. Горького, 15', N'4.31817e+009', 7)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (5, 2, N'Паркет', N'Иванов Дмитрий Сергеевич', N'ivanov.dmitrij@mail.ru', N'921 851 21 22', N'606440, Нижегородская область, город Бор, ул. Свободы, 3', N'7.68785e+009', 7)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (6, 3, N'Дом и сад', N'Аникеева Екатерина Алексеевна', N'ekaterina.anikeeva@ml.ru', N'499 936 29 26', N'393760, Тамбовская область, город Мичуринск, ул. Красная, 50', N'6.11914e+009', 7)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (7, 4, N'Легкий шаг', N'Богданова Ксения Владимировна', N'bogdanova.kseniya@bkv.ru', N'495 445 61 41', N'307370, Курская область, город Рыльск, ул. Гагарина, 16', N'1.12217e+009', 6)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (8, 3, N'СтройМатериалы', N'Холодова Валерия Борисовна', N'holodova@education.ru', N'499 234 56 78', N'140300, Московская область, город Егорьевск, ул. Советская, 24', N'8.35511e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (9, 4, N'Мир отделки', N'Крылов Савелий Тимофеевич', N'stkrylov@mail.ru', N'908 713 51 88', N'344116, Ростовская область, город Ростов-на-Дону, ул. Артиллерийская, 4', N'3.53237e+009', 8)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (10, 4, N'Технологии комфорта', N'Белов Кирилл Александрович', N'kirill_belov@kir.ru', N'918 432 12 34', N'164500, Архангельская область, город Северодвинск, ул. Ломоносова, 29', N'2.36243e+009', 4)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (11, 3, N'Твой дом', N'Демидов Дмитрий Александрович', N'dademidov@ml.ru', N'919 698 75 43', N'354000, Краснодарский край, город Сочи, ул. Больничная, 11', N'4.15922e+009', 10)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (12, 1, N'Новые краски', N'Алиев Дамир Игоревич', N'alievdamir@tk.ru', N'812 823 93 42', N'187556, Ленинградская область, город Тихвин, ул. Гоголя, 18', N'9.03246e+009', 9)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (13, 4, N'Политехник', N'Котов Михаил Михайлович', N'mmkotov56@educat.ru', N'495 895 71 77', N'143960, Московская область, город Реутов, ул. Новая, 55', N'3.77667e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (14, 4, N'СтройАрсенал', N'Семенов Дмитрий Максимович', N'semenov.dm@mail.ru', N'896 123 45 56', N'242611, Брянская область, город Фокино, ул. Фокино, 23', N'7.44786e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (15, 3, N'Декор и порядок', N'Болотов Артем Игоревич', N'artembolotov@ab.ru', N'950 234 12 12', N'309500, Белгородская область, город Старый Оскол, ул. Цветочная, 20', N'9.03704e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (16, 3, N'Умные решения', N'Воронова Анастасия Валерьевна', N'voronova_anastasiya@mail.ru', N'923 233 27 69', N'652050, Кемеровская область, город Юрга, ул. Мира, 42', N'6.22152e+009', 3)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (17, 1, N'Натуральные покрытия', N'Горбунов Василий Петрович', N'vpgorbunov24@vvs.ru', N'902 688 28 96', N'188300, Ленинградская область, город Гатчина, пр. 25 Октября, 17', N'2.26243e+009', 9)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (18, 2, N'СтройМастер', N'Смирнов Иван Андреевич', N'smirnov_ivan@kv.ru', N'917 234 75 55', N'184250, Мурманская область, город Кировск, пр. Ленина, 24', N'4.15522e+009', 9)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (19, 2, N'Гранит', N'Джумаев Ахмед Умарович', N'dzhumaev.ahmed@amail.ru', N'495 452 55 95', N'162390, Вологодская область, город Великий Устюг, ул. Железнодорожная, 36', N'3.96123e+009', 5)
+GO
+INSERT [dbo].[Partner] ([ID], [PartnerType], [PartnerName], [Director], [Email], [PhoneNumber], [Address], [INN], [Rating]) VALUES (20, 1, N'Строитель', N'Петров Николай Тимофеевич', N'petrov.nikolaj31@mail.ru', N'916 596 15 55', N'188910, Ленинградская область, город Приморск, ш. Приморское, 18', N'9.60028e+009', 10)
+GO
+SET IDENTITY_INSERT [dbo].[Partner] OFF
+GO
+SET IDENTITY_INSERT [dbo].[PartnerRequest] ON 
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (1, 1)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (2, 2)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (3, 3)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (4, 4)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (5, 5)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (6, 6)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (7, 7)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (8, 8)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (9, 9)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (10, 10)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (11, 11)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (12, 12)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (13, 13)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (14, 14)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (15, 15)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (16, 16)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (17, 17)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (18, 18)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (19, 19)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (20, 20)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (81, 1)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (82, 1)
+GO
+INSERT [dbo].[PartnerRequest] ([ID], [Partner]) VALUES (83, 7)
+GO
+SET IDENTITY_INSERT [dbo].[PartnerRequest] OFF
+GO
+SET IDENTITY_INSERT [dbo].[PartnerRequestList] ON 
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (1, 1, 4, 2001)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (2, 2, 5, 3000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (3, 3, 1, 1000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (4, 4, 3, 9500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (5, 5, 1, 2000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (6, 6, 18, 1100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (7, 7, 12, 5000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (8, 8, 1, 2500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (9, 9, 2, 6000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (10, 10, 6, 7000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (11, 11, 4, 5000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (12, 12, 4, 7500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (13, 13, 1, 3000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (14, 14, 18, 500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (15, 15, 16, 7000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (16, 16, 9, 4000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (17, 17, 1, 3500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (18, 18, 1, 7900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (19, 19, 15, 9600)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (20, 20, 15, 1200)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (21, 1, 11, 1500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (22, 2, 8, 3000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (23, 3, 2, 3010)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (24, 4, 7, 3020)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (25, 5, 5, 3050)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (26, 6, 14, 3040)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (27, 7, 19, 3050)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (28, 8, 4, 3060)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (29, 9, 18, 3070)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (30, 10, 9, 5400)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (31, 11, 12, 5500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (32, 12, 11, 5600)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (33, 13, 9, 5700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (34, 14, 14, 5800)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (35, 15, 2, 5900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (36, 16, 12, 6000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (37, 17, 6, 6100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (38, 18, 9, 8000)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (39, 19, 3, 7060)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (40, 20, 17, 6120)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (41, 1, 20, 5180)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (42, 2, 10, 4240)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (43, 3, 10, 3300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (44, 4, 10, 2360)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (45, 5, 8, 1420)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (46, 6, 11, 1500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (47, 7, 5, 1700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (48, 8, 12, 1900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (49, 9, 15, 2100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (50, 10, 12, 2300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (51, 11, 8, 2500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (52, 12, 15, 2700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (53, 13, 12, 2900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (54, 14, 1, 3100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (55, 15, 18, 3300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (56, 16, 20, 3500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (57, 17, 10, 3750)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (58, 18, 14, 6700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (59, 19, 7, 6950)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (60, 20, 11, 7200)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (61, 1, 17, 7450)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (63, 3, 20, 7950)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (64, 4, 8, 8200)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (65, 5, 10, 8450)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (66, 6, 7, 8700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (67, 7, 8, 8950)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (68, 8, 20, 9200)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (69, 9, 4, 1300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (70, 10, 16, 1500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (71, 11, 16, 1700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (72, 12, 12, 1900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (73, 13, 20, 2100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (74, 14, 9, 2300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (75, 15, 13, 2500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (76, 16, 13, 2700)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (77, 17, 12, 2900)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (78, 18, 3, 3100)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (79, 19, 14, 3300)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (80, 20, 18, 3500)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (82, 81, 2, 1)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (83, 81, 7, 1)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (84, 81, 3, 1)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (85, 82, 2, 10)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (86, 82, 3, 1)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (87, 83, 2, 111)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (88, 83, 7, 1)
+GO
+INSERT [dbo].[PartnerRequestList] ([ID], [PartnerRequest], [Product], [Quantity]) VALUES (89, 83, 10, 1)
+GO
+SET IDENTITY_INSERT [dbo].[PartnerRequestList] OFF
+GO
+SET IDENTITY_INSERT [dbo].[PartnerType] ON 
+GO
+INSERT [dbo].[PartnerType] ([ID], [PartnerTypeName]) VALUES (1, N'ЗАО')
+GO
+INSERT [dbo].[PartnerType] ([ID], [PartnerTypeName]) VALUES (2, N'ООО')
+GO
+INSERT [dbo].[PartnerType] ([ID], [PartnerTypeName]) VALUES (3, N'ПАО')
+GO
+INSERT [dbo].[PartnerType] ([ID], [PartnerTypeName]) VALUES (4, N'ОАО')
+GO
+SET IDENTITY_INSERT [dbo].[PartnerType] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (1, N'Фанера ФСФ 1800х1200х27 мм бежевая береза', 6549922, 5100, 1, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (2, N'Мягкие панели прямоугольник велюр цвет оливковый 600х300х35 мм', 7018556, 1880, 2, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (3, N'Бетонная плитка Белый кирпич микс 30х7,3 см', 5028272, 2080, 3, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (4, N'Плитка Мозаика 10x10 см цвет белый глянец', 8028248, 2500, 4, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (5, N'Ламинат Дуб Античный серый 32 класс толщина 8 мм с фаской', 9250282, 4050, 5, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (6, N'Стеновая панель МДФ Флора 1440x500x10 мм', 7130981, 2100.56, 2, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (7, N'Бетонная плитка Красный кирпич 20x6,5 см', 5029784, 2760, 3, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (8, N'Ламинат Канди Дизайн 33 класс толщина 8 мм с фаской', 9658953, 3200.96, 5, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (9, N'Плита ДСП 11 мм влагостойкая 594x1815 мм', 6026662, 497.69, 1, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (10, N'Ламинат с натуральным шпоном Дуб Эксперт толщина 6 мм с фаской', 9159043, 3750, 5, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (11, N'Плитка настенная Формат 20x40 см матовая цвет мята', 8588376, 2500, 4, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (12, N'Плита ДСП Кантри 16 мм 900x1200 мм', 6758375, 1050.96, 1, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (13, N'Стеновая панель МДФ Сосна Полярная 60х280х4мсм цвет коричневый', 7759324, 1700, 2, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (14, N'Клинкерная плитка коричневая 29,8х29,8 см', 5118827, 860, 3, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (15, N'Плитка настенная Цветок 60x120 см цвет зелено-голубой', 8559898, 2300, 4, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (16, N'Пробковое настенное покрытие 600х300х3 мм белый ', 7259474, 3300, 2, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (17, N'Плитка настенная Нева 30x60 см цвет серый', 8115947, 1700, 4, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (18, N'Гипсовая плитка настенная Дом на берегу кирпич белый 18,5х4,5 см', 5033136, 499, 3, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (19, N'Ламинат Дуб Северный белый 32 класс толщина 8 мм с фаской', 9028048, 2550, 5, NULL)
+GO
+INSERT [dbo].[Product] ([ID], [ProductName], [Article], [MinCostForPartner], [ProductType], [Material]) VALUES (20, N'Дерево волокнистая плита Дуб Винтаж 1200х620х3 мм светло-коричневый', 6123459, 900.5, 1, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ProductType] ON 
+GO
+INSERT [dbo].[ProductType] ([ID], [ProductTypeName], [CoefficentOfLostness]) VALUES (1, N'Древесно-плитные материалы', 1.5)
+GO
+INSERT [dbo].[ProductType] ([ID], [ProductTypeName], [CoefficentOfLostness]) VALUES (2, N'Декоративные панели', 3.5)
+GO
+INSERT [dbo].[ProductType] ([ID], [ProductTypeName], [CoefficentOfLostness]) VALUES (3, N'Фасадные материалы', 5.25)
+GO
+INSERT [dbo].[ProductType] ([ID], [ProductTypeName], [CoefficentOfLostness]) VALUES (4, N'Плитка', 4.5)
+GO
+INSERT [dbo].[ProductType] ([ID], [ProductTypeName], [CoefficentOfLostness]) VALUES (5, N'Напольные покрытия', 2.17)
+GO
+SET IDENTITY_INSERT [dbo].[ProductType] OFF
+GO
+ALTER TABLE [dbo].[Material]  WITH CHECK ADD  CONSTRAINT [FK_Material_MaterialType] FOREIGN KEY([MaterialType])
+REFERENCES [dbo].[MaterialType] ([ID])
+GO
+ALTER TABLE [dbo].[Material] CHECK CONSTRAINT [FK_Material_MaterialType]
+GO
+ALTER TABLE [dbo].[Partner]  WITH CHECK ADD  CONSTRAINT [FK_Partner_PartnerType] FOREIGN KEY([PartnerType])
+REFERENCES [dbo].[PartnerType] ([ID])
+GO
+ALTER TABLE [dbo].[Partner] CHECK CONSTRAINT [FK_Partner_PartnerType]
+GO
+ALTER TABLE [dbo].[PartnerRequest]  WITH CHECK ADD  CONSTRAINT [FK_PartnerRequest_Partner] FOREIGN KEY([Partner])
+REFERENCES [dbo].[Partner] ([ID])
+GO
+ALTER TABLE [dbo].[PartnerRequest] CHECK CONSTRAINT [FK_PartnerRequest_Partner]
+GO
+ALTER TABLE [dbo].[PartnerRequestList]  WITH CHECK ADD  CONSTRAINT [FK_PartnerRequestList_PartnerRequest] FOREIGN KEY([PartnerRequest])
+REFERENCES [dbo].[PartnerRequest] ([ID])
+GO
+ALTER TABLE [dbo].[PartnerRequestList] CHECK CONSTRAINT [FK_PartnerRequestList_PartnerRequest]
+GO
+ALTER TABLE [dbo].[PartnerRequestList]  WITH CHECK ADD  CONSTRAINT [FK_PartnerRequestList_Product] FOREIGN KEY([Product])
+REFERENCES [dbo].[Product] ([ID])
+GO
+ALTER TABLE [dbo].[PartnerRequestList] CHECK CONSTRAINT [FK_PartnerRequestList_Product]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Material] FOREIGN KEY([Material])
+REFERENCES [dbo].[Material] ([ID])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Material]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_ProductType] FOREIGN KEY([ProductType])
+REFERENCES [dbo].[ProductType] ([ID])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_ProductType]
+GO
+USE [master]
+GO
+ALTER DATABASE [dbForDemo0202] SET  READ_WRITE 
+GO
